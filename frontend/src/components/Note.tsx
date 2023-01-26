@@ -1,6 +1,7 @@
 import styles from "../styles/Note.module.css"
 import { Card } from 'react-bootstrap';
 import { Note as NoteModel } from '../models/note';
+import { formatDate } from '../utils/formatDate';
 
 interface NoteProps {
     note: NoteModel,
@@ -15,6 +16,13 @@ const Note = ({ note, className } : NoteProps) => {
         updatedAt,
     } = note;
 
+    let createdUpdatedText: string;
+    if (createdAt > updatedAt) {
+        createdUpdatedText = `Updated: ${formatDate(updatedAt)}`;
+    } else {
+        createdUpdatedText = `Created: ${formatDate(createdAt)}`;
+    }
+
     return (
         <Card className={`${styles.noteCard} ${className}`}>
             <Card.Body className={styles.cardBody}>
@@ -27,7 +35,7 @@ const Note = ({ note, className } : NoteProps) => {
 
             </Card.Body>
             <Card.Footer className={styles.cardFooter}>
-                {createdAt && <small className="text-muted">Created: {createdAt}</small>}
+                {createdUpdatedText}
             </Card.Footer>
         </Card>
       )
