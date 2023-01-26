@@ -1,24 +1,35 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { Note } from './models/note';
 
 function App() {
+
+  const[notes, setNotes] = useState<Note[]>([]);
+
+  useEffect( () => {
+    async function loadNotes() {
+      try{
+        const response = await fetch('/api/notes', {
+          method: 'GET',
+        });
+        const notes = await response.json();
+        setNotes(notes);
+      } catch(error) {
+        console.log(error);
+        alert(error);
+      }
+      
+    }
+    loadNotes();
+  },[]);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Suscribe to Javilonte
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {JSON.stringify(notes)}
     </div>
   );
 }
