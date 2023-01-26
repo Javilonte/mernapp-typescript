@@ -4,9 +4,10 @@ import { Note as NoteModel } from '../models/note';
 
 interface NoteProps {
     note: NoteModel,
+    className?: string,
 }
 
-const Note = ({ note } : NoteProps) => {
+const Note = ({ note, className } : NoteProps) => {
     const {
         title,
         text,
@@ -15,8 +16,8 @@ const Note = ({ note } : NoteProps) => {
     } = note;
 
     return (
-        <Card className={styles.noteCard}>
-            <Card.Body>
+        <Card className={`${styles.noteCard} ${className}`}>
+            <Card.Body className={styles.cardBody}>
                 <Card.Title>
                     {title}
                 </Card.Title>
@@ -25,6 +26,9 @@ const Note = ({ note } : NoteProps) => {
                 </Card.Text>
 
             </Card.Body>
+            <Card.Footer className={styles.cardFooter}>
+                {createdAt && <small className="text-muted">Created: {createdAt}</small>}
+            </Card.Footer>
         </Card>
       )
 }
