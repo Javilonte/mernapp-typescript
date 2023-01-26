@@ -1,0 +1,7 @@
+.noteCard {
+    background:linear-gradient(135deg, #65799b 0%,#5e2563 100%);
+
+}
+.cardText {
+    white-space: pre-line;
+}
