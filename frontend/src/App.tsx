@@ -6,18 +6,20 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Note as NoteModel } from './models/note';
 import Note from './components/Note';
 import styles from './styles/NotePage.module.css';
+import * as NotesApi from './network/notes_api';
+import { AddNoteDialog } from './components/AddNoteDialog';
 
 function App() {
 
   const[notes, setNotes] = useState<NoteModel[]>([]);
 
+  const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+
+
   useEffect( () => {
     async function loadNotes() {
       try{
-        const response = await fetch('/api/notes', {
-          method: 'GET',
-        });
-        const notes = await response.json();
+        const notes = await NotesApi.fetchNotes();
         setNotes(notes);
       } catch(error) {
         console.log(error);
@@ -31,6 +33,9 @@ function App() {
 
   return (
     <Container>
+      <Button onClick={()=> setShowAddNoteDialog(true)}>
+        Add New Note
+      </Button>
       <Row xs={1} md={2} lg={3} className='g-4'>
         
       {notes.map(note => (
@@ -40,6 +45,12 @@ function App() {
       ))}
       
       </Row>
+      {
+        showAddNoteDialog && 
+        <AddNoteDialog 
+          onDismiss={() => setShowAddNoteDialog(false)}
+        />
+      }
     </Container>
   );
 }
