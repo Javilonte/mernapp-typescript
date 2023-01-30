@@ -2,7 +2,7 @@
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Note as NoteModel } from './models/note';
 import Note from './components/Note';
 import styles from './styles/NotePage.module.css';
@@ -19,14 +19,23 @@ function App() {
 
   const [noteToEdit, setNoteToEdit] = useState<NoteModel|null>(null);
 
+  const [notesLoading, setNotesLoading] = useState(true);
+
+  const [showNotesLoadingError, setShowNotesLoadingError] = useState(false);
+
+
   useEffect( () => {
     async function loadNotes() {
       try{
+        setShowNotesLoadingError(false);
+        setNotesLoading(true);
         const notes = await NotesApi.fetchNotes();
         setNotes(notes);
       } catch(error) {
         console.log(error);
-        alert(error);
+        setShowNotesLoadingError(true);
+      } finally {
+        setNotesLoading(false);
       }
       
     }
@@ -43,6 +52,20 @@ function App() {
     }
   }
 
+  const notesGrid = 
+  <Row xs={1} md={2} lg={3} className='g-4'>
+        
+  {notes.map(note => (
+    <Col key={note._id}>
+    <Note note={note}
+      onDeleteNoteClicked={deleteNote}
+      onNoteClicked={setNoteToEdit}
+      className={styles.note} />
+    </Col>
+  ))}
+  
+  </Row>
+
   return (
     <Container>
       <Button 
@@ -51,18 +74,15 @@ function App() {
         <FaPlus />
         Add New Note
       </Button>
-      <Row xs={1} md={2} lg={3} className='g-4'>
-        
-      {notes.map(note => (
-        <Col key={note._id}>
-        <Note note={note}
-          onDeleteNoteClicked={deleteNote}
-          onNoteClicked={setNoteToEdit}
-          className={styles.note} />
-        </Col>
-      ))}
-      
-      </Row>
+
+      {notesLoading && <Spinner animation="border" />}
+      {showNotesLoadingError && <p>Failed to load notes</p>}
+      {!notesLoading && !showNotesLoadingError && 
+      <>
+      {notes.length > 0 ? notesGrid : <p>No notes found</p>}
+      </>
+      }
+     
       {
         showAddNoteDialog && 
         <AddEditNoteDialog 
