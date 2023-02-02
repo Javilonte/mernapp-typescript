@@ -53,7 +53,7 @@ function App() {
   }
 
   const notesGrid = 
-  <Row xs={1} md={2} lg={3} className='g-4'>
+  <Row xs={1} md={2} lg={3} className={`g-4 ${styles.noteGrid}`}>
         
   {notes.map(note => (
     <Col key={note._id}>
@@ -67,7 +67,7 @@ function App() {
   </Row>
 
   return (
-    <Container>
+    <Container className={styles.notesPage}>
       <Button 
       className={`mb-4 ${stylesUtils.blockCenter} ${stylesUtils.flexCenter}` }
       onClick={()=> setShowAddNoteDialog(true)}>
