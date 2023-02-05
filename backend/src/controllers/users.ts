@@ -40,6 +40,8 @@ export const singUp: RequestHandler<unknown, unknown, SingUpBody, unknown> = asy
             password: passwordHashed,
         })
 
+        req.session.userId= newUser._id;
+
         res.status(201).json(newUser);
 
     } catch(error) {
