@@ -1,5 +1,4 @@
 
-import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Row, Spinner } from 'react-bootstrap';
@@ -10,6 +9,7 @@ import stylesUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
 import { AddEditNoteDialog } from './components/AddEditNoteDialog';
 import {FaPlus} from 'react-icons/fa';
+import SingUpModal from './components/SignUpModal';
 
 function App() {
 
@@ -104,7 +104,13 @@ function App() {
         }}
         />
         }
+        
+    {true && 
+    <SingUpModal 
+    onDismiss={() => {}} 
+    onSignUpSuccessful={() => {}} />}
     </Container>
+
   );
 }
 
