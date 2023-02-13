@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import { User } from "../models/user";
-import { SignUpCredentials } from "../network/notes_api";
-import * as NotesApi from "../network/notes_api";
+import { User } from "../../models/user";
+import { SignUpCredentials } from "../../network/notes_api";
+import * as NotesApi from "../../network/notes_api";
 import { Button, Form, Modal } from "react-bootstrap";
-import TextInputField from "./form/inputField";
+import TextInputField from "./inputField";
 import styleUtils from "../styles/utils.module.css";
 
 interface SignUpModalProps {

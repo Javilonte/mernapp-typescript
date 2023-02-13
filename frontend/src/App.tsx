@@ -9,7 +9,8 @@ import stylesUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
 import { AddEditNoteDialog } from './components/AddEditNoteDialog';
 import {FaPlus} from 'react-icons/fa';
-import SingUpModal from './components/SignUpModal';
+import SingUpModal from './components/form/SignUpModal';
+import LoginModal from './components/form/LoginModal';
 
 function App() {
 
@@ -105,10 +106,18 @@ function App() {
         />
         }
         
-    {true && 
+    {false && 
     <SingUpModal 
     onDismiss={() => {}} 
     onSignUpSuccessful={() => {}} />}
+
+    {true && 
+      <LoginModal
+        onDismiss={() => {}} 
+        onLoginSuccessful={() => {}}
+      />
+    }
+
     </Container>
 
   );
